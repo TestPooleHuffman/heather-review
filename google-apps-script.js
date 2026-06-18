@@ -37,7 +37,13 @@ function submitReview_(data){
   r.appendRow([new Date(),data.caseId,data.clientName,data.qualityLead,data.consultType,data.minRetainer,data.docsNeeded,data.attorneyNotes,data.referralInMind,data.referralNotes]);
   const q=sheet_("Queue", QUEUE_HEADERS), values=q.getDataRange().getValues(), headers=values[0];
   const idCol=headers.indexOf("id")+1, statusCol=headers.indexOf("status")+1, reviewedAtCol=headers.indexOf("reviewedAt")+1;
-  for(let i=1;i<values.length;i++){if(String(values[i][idCol-1])===String(data.caseId)){q.getRange(i+1,statusCol).setValue("Reviewed");q.getRange(i+1,reviewedAtCol).setValue(new Date());break;}}
+  for(let i=1;i<values.length;i++){
+    if(String(values[i][idCol-1])===String(data.caseId)){
+      q.getRange(i+1,statusCol).setValue("Reviewed");
+      q.getRange(i+1,reviewedAtCol).setValue(new Date());
+      break;
+    }
+  }
   return {ok:true};
 }
 function addCase_(data){
