@@ -1,4 +1,4 @@
-const DRIVE_FOLDER_ID = "PASTE_GOOGLE_DRIVE_FOLDER_ID_HERE";
+const DRIVE_FOLDER_ID = "1Qo4q_kLc18x_MHc0yTDRXRQXLAQrtrLJ";
 
 const QUEUE_HEADERS = ["id","status","name","submitted","practice","value","adverse","email","phone","summary","fullText","formUrl","docsJson","specialTag","createdAt","reviewedAt"];
 const REVIEW_HEADERS = ["timestamp","caseId","clientName","qualityLead","consultType","minRetainer","docsNeeded","attorneyNotes","referralInMind","referralNotes"];
@@ -37,13 +37,7 @@ function submitReview_(data){
   r.appendRow([new Date(),data.caseId,data.clientName,data.qualityLead,data.consultType,data.minRetainer,data.docsNeeded,data.attorneyNotes,data.referralInMind,data.referralNotes]);
   const q=sheet_("Queue", QUEUE_HEADERS), values=q.getDataRange().getValues(), headers=values[0];
   const idCol=headers.indexOf("id")+1, statusCol=headers.indexOf("status")+1, reviewedAtCol=headers.indexOf("reviewedAt")+1;
-  for(let i=1;i<values.length;i++){
-    if(String(values[i][idCol-1])===String(data.caseId)){
-      q.getRange(i+1,statusCol).setValue("Reviewed");
-      q.getRange(i+1,reviewedAtCol).setValue(new Date());
-      break;
-    }
-  }
+  for(let i=1;i<values.length;i++){if(String(values[i][idCol-1])===String(data.caseId)){q.getRange(i+1,statusCol).setValue("Reviewed");q.getRange(i+1,reviewedAtCol).setValue(new Date());break;}}
   return {ok:true};
 }
 function addCase_(data){
