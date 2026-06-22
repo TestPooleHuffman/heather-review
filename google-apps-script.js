@@ -15,7 +15,7 @@ function doPost(e){
 function doGet(){return json({ok:true,message:"Heather Review Portal backend is live."});}
 function json(obj){return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);}
 function sheet_(name, headers){
-  const ss=SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById("1P70fKzta4z79QD5U5YDegO8RTBCZuD956GDHz4wYX3o");
   let sh=ss.getSheetByName(name);
   if(!sh) sh=ss.insertSheet(name);
   if(sh.getLastRow()===0) sh.appendRow(headers);
