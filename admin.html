@@ -112,33 +112,33 @@ async function submitCase(e){
   e.preventDefault();
   $("status").textContent="Uploading…";
 
-  let form=new FormData(e.target),payload=Object.fromEntries(form.entries());
-  payload.intakeFile=intakeFile?await fileToBase64(intakeFile):null;
-  payload.docs=[];
-  for(const f of docFiles) payload.docs.push(await fileToBase64(f));
+  const form = new FormData(e.target);
+  const payload = Object.fromEntries(form.entries());
+  payload.intakeFile = intakeFile ? await fileToBase64(intakeFile) : null;
+  payload.docs = [];
 
-  try{
-    const result = await api("addCase",payload);
+  for (const f of docFiles) {
+    payload.docs.push(await fileToBase64(f));
+  }
+
+  try {
+    const result = await api("addCase", payload);
     console.log("Apps Script response:", result);
 
-    if(!result || result.ok !== true){
+    if (!result || result.ok !== true) {
       const msg = result && result.error ? result.error : "Unknown Apps Script error";
-      $("status").textContent="Upload reached Apps Script, but Apps Script said no: " + msg;
-      alert("Upload did NOT reach Heather’s Queue. Apps Script error:
-
-" + msg);
+      $("status").textContent = "Upload reached Apps Script, but Apps Script returned an error: " + msg;
+      alert("Upload did NOT reach Heather’s Queue. Apps Script error:\n\n" + msg);
       return;
     }
 
-    $("status").textContent="Uploaded! It should now appear in Heather’s queue.";
+    $("status").textContent = "Uploaded! It should now appear in Heather’s queue.";
     showSuccess();
     resetForm();
-  }catch(err){
-    $("status").textContent="Upload failed before Apps Script could respond. Check Console/Network.";
+  } catch (err) {
+    $("status").textContent = "Upload failed before Apps Script could respond. Check Console/Network.";
     console.error("Upload failed:", err);
-    alert("Upload failed before Apps Script could respond. Check Console/Network.
-
-" + err);
+    alert("Upload failed before Apps Script could respond. Check Console/Network.\n\n" + err);
   }
 }
 function resetForm(){$("caseForm").reset();intakeFile=null;docFiles=[];$("intakeList").textContent="";$("docsList").textContent="";$("step2").classList.remove("active");$("step1").classList.add("active");}
