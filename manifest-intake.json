@@ -1,0 +1,15 @@
+{
+  "name": "Intake Upload Portal",
+  "short_name": "Intake Portal",
+  "start_url": "admin.html",
+  "display": "standalone",
+  "background_color": "#f4fbff",
+  "theme_color": "#dff4ff",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
