@@ -57,3 +57,8 @@ function saveFile_(folder,fileObj){
   return folder.createFile(blob);
 }
 function slug_(s){return String(s||"case").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
+
+function testDrive() {
+  var folder = DriveApp.getFolderById("1Qo4q_kLc18x_MHc0yTDRXRQXLAQrtrLJ");
+  Logger.log(folder.getName());
+}
